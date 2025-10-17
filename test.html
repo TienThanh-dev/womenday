@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>20/10 - I Love You</title>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            overflow: hidden;
+            color: white;
+            font-family: "Brush Script MT", cursive;
+        }
+
+        canvas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Hai đoạn lời chúc dài hai bên */
+        .side-text {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30%;
+            font-size: 28px;
+            line-height: 1.6;
+            color: rgb(255, 132, 204);
+            text-shadow: 0 0 12px rgb(255, 0, 128);
+            font-style: italic;
+            animation: fadeIn 3s ease-in-out;
+            white-space: pre-line;
+            z-index: 5;
+
+        }
+
+        .left-text {
+            left: 3%;
+            text-align: right;
+        }
+
+        .right-text {
+            right: 3%;
+            text-align: left;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+        }
+
+        /* Dòng chữ trung tâm cuối trang */
+        .center-text {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+            color: rgb(255, 0, 200);
+            font-size: 38px;
+            font-style: italic;
+            text-shadow: 0 0 20px rgb(255, 0, 150);
+            z-index: 10;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="pinkboard"></canvas>
+
+    <div class="side-text left-text">
+        💐 Nhân ngày Phụ nữ Việt Nam 20/10,
+        xin gửi đến tất cả các chị em đồng nghiệp
+        những lời chúc tốt đẹp và chân thành nhất!
+        Chúc các chị em luôn tươi trẻ, tự tin,
+        và tràn đầy năng lượng trong công việc cũng như cuộc sống.
+        Cảm ơn mọi người đã luôn là nguồn cảm hứng,
+        là điểm tựa và là một phần quan trọng của tập thể. 🌷
+    </div>
+
+    <div class="side-text right-text">
+        🌸 Chúc các chị em luôn giữ được nụ cười rạng rỡ,
+        niềm tin vững vàng và trái tim đầy nhiệt huyết.
+        Mong rằng mỗi ngày đi làm đều là một ngày vui,
+        đầy ắp tiếng cười, sự yêu thương và gắn kết.
+        Xin chúc mừng ngày 20/10 –
+        ngày tôn vinh những người phụ nữ tuyệt vời nhất trong công ty chúng ta! 💖
+    </div>
+
+    <!-- Dòng chữ ở dưới -->
+    <div class="center-text">I Love everyone💗 with Endless Love</div>
+    <!-- Nhạc nền 20/10 -->
+    <audio id="bg-music" autoplay loop>
+        <source
+            src="https://cdn.pixabay.com/audio/2025/02/26/audio_5543440ed2.mp3?filename=international-womanx27s-day-306450.mp3"
+            type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát nhạc.
+    </audio>
+
+
+    <audio id="bg-music" autoplay loop>
+        <source id="music-src"
+            src="https://cdn.pixabay.com/audio/2025/02/26/audio_5543440ed2.mp3?filename=international-womanx27s-day-306450.mp3"
+            type="audio/mpeg">
+    </audio>
+
+    <script>
+        window.addEventListener('load', async () => {
+            const music = document.getElementById('bg-music');
+            try {
+                music.volume = 0.0;
+                await music.play();
+                // Sau 1 giây bật tiếng dần
+                setTimeout(() => {
+                    let vol = 0;
+                    const fade = setInterval(() => {
+                        vol += 0.05;
+                        music.volume = vol;
+                        if (vol >= 1) clearInterval(fade);
+                    }, 200);
+                }, 1000);
+            } catch (e) {
+                console.log('Autoplay bị chặn. Cần click tay.');
+            }
+        });
+    </script>
+
+    <script>
+        window.addEventListener("load", () => {
+            const music = document.getElementById("bg-music");
+            setTimeout(() => {
+                music.muted = false;
+                music.play().catch(() => { });
+            }, 1000);
+        });
+        // ==============================
+        // Hiệu ứng trái tim
+        // ==============================
+        var settings = {
+            particles: { length: 10000, duration: 4, velocity: 80, effect: -1.3, size: 8 }
+        };
+        (function () {
+            var b = 0, c = ["ms", "moz", "webkit", "o"];
+            for (var a = 0; a < c.length && !window.requestAnimationFrame; ++a) {
+                window.requestAnimationFrame = window[c[a] + "RequestAnimationFrame"];
+                window.cancelAnimationFrame = window[c[a] + "CancelAnimationFrame"] || window[c[a] + "CancelRequestAnimationFrame"];
+            }
+            if (!window.requestAnimationFrame) window.requestAnimationFrame = function (h) {
+                var d = new Date().getTime(), f = Math.max(0, 16 - (d - b));
+                var g = window.setTimeout(function () { h(d + f); }, f);
+                b = d + f; return g;
+            };
+            if (!window.cancelAnimationFrame) window.cancelAnimationFrame = function (d) { clearTimeout(d); };
+        }());
+
+        var Point = function (x, y) { this.x = x || 0; this.y = y || 0; };
+        Point.prototype.clone = function () { return new Point(this.x, this.y); };
+        Point.prototype.length = function (length) {
+            if (length === undefined) return Math.sqrt(this.x * this.x + this.y * this.y);
+            this.normalize(); this.x *= length; this.y *= length; return this;
+        };
+        Point.prototype.normalize = function () {
+            var length = this.length(); this.x /= length; this.y /= length; return this;
+        };
+
+        var Particle = function () {
+            this.position = new Point();
+            this.velocity = new Point();
+            this.acceleration = new Point();
+            this.age = 0;
+        };
+        Particle.prototype.initialize = function (x, y, dx, dy) {
+            this.position.x = x; this.position.y = y;
+            this.velocity.x = dx; this.velocity.y = dy;
+            this.acceleration.x = dx * settings.particles.effect;
+            this.acceleration.y = dy * settings.particles.effect;
+            this.age = 0;
+        };
+        Particle.prototype.update = function (deltaTime) {
+            this.position.x += this.velocity.x * deltaTime;
+            this.position.y += this.velocity.y * deltaTime;
+            this.velocity.x += this.acceleration.x * deltaTime;
+            this.velocity.y += this.acceleration.y * deltaTime;
+            this.age += deltaTime;
+        };
+        Particle.prototype.draw = function (context, image) {
+            function ease(t) { return (--t) * t * t + 1; }
+            var size = image.width * ease(this.age / settings.particles.duration);
+            context.globalAlpha = 1 - this.age / settings.particles.duration;
+            context.drawImage(image, this.position.x - size / 2, this.position.y - size / 2, size, size);
+        };
+
+        var ParticlePool = function (length) {
+            this.particles = new Array(length);
+            for (var i = 0; i < this.particles.length; i++)
+                this.particles[i] = new Particle();
+            this.firstActive = 0;
+            this.firstFree = 0;
+            this.duration = settings.particles.duration;
+        };
+        ParticlePool.prototype.add = function (x, y, dx, dy) {
+            this.particles[this.firstFree].initialize(x, y, dx, dy);
+            this.firstFree = (this.firstFree + 1) % this.particles.length;
+            if (this.firstFree == this.firstActive)
+                this.firstActive = (this.firstActive + 1) % this.particles.length;
+        };
+        ParticlePool.prototype.update = function (deltaTime) {
+            var i, length = this.particles.length;
+            if (this.firstActive < this.firstFree) {
+                for (i = this.firstActive; i < this.firstFree; i++) this.particles[i].update(deltaTime);
+            } else {
+                for (i = this.firstActive; i < length; i++) this.particles[i].update(deltaTime);
+                for (i = 0; i < this.firstFree; i++) this.particles[i].update(deltaTime);
+            }
+            while (this.particles[this.firstActive].age >= this.duration && this.firstActive != this.firstFree) {
+                this.firstActive = (this.firstActive + 1) % length;
+            }
+        };
+        ParticlePool.prototype.draw = function (context, image) {
+            var i, length = this.particles.length;
+            if (this.firstActive < this.firstFree) {
+                for (i = this.firstActive; i < this.firstFree; i++) this.particles[i].draw(context, image);
+            } else {
+                for (i = this.firstActive; i < length; i++) this.particles[i].draw(context, image);
+                for (i = 0; i < this.firstFree; i++) this.particles[i].draw(context, image);
+            }
+        };
+
+        (function (canvas) {
+            var context = canvas.getContext('2d'),
+                particles = new ParticlePool(settings.particles.length),
+                particleRate = settings.particles.length / settings.particles.duration,
+                time;
+
+            function pointOnHeart(t) {
+                return new Point(
+                    160 * Math.pow(Math.sin(t), 3),
+                    130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
+                );
+            }
+
+            var image = (function () {
+                var canvas = document.createElement('canvas'),
+                    context = canvas.getContext('2d');
+                canvas.width = settings.particles.size;
+                canvas.height = settings.particles.size;
+                function to(t) {
+                    var point = pointOnHeart(t);
+                    point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
+                    point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
+                    return point;
+                }
+                context.beginPath();
+                var t = -Math.PI;
+                var point = to(t);
+                context.moveTo(point.x, point.y);
+                while (t < Math.PI) {
+                    t += 0.01;
+                    point = to(t);
+                    context.lineTo(point.x, point.y);
+                }
+                context.closePath();
+                context.fillStyle = '#f50b02';
+                context.fill();
+                var image = new Image();
+                image.src = canvas.toDataURL();
+                return image;
+            })();
+
+            function render() {
+                requestAnimationFrame(render);
+                var newTime = new Date().getTime() / 1000,
+                    deltaTime = newTime - (time || newTime);
+                time = newTime;
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                var amount = particleRate * deltaTime;
+                for (var i = 0; i < amount; i++) {
+                    var pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                    var dir = pos.clone().length(settings.particles.velocity);
+                    particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+                }
+                particles.update(deltaTime);
+                particles.draw(context, image);
+            }
+
+            function onResize() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+            }
+
+            window.onresize = onResize;
+            setTimeout(function () {
+                onResize();
+                render();
+            }, 10);
+        })(document.getElementById('pinkboard'));
+    </script>
+</body>
+
+</html>
